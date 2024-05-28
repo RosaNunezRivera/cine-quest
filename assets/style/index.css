@@ -1,0 +1,321 @@
+/*---------------------------------------------------*/ 
+/*             Styles file                           */
+/*---------------------------------------------------*/
+
+/* Import values of reset file                       */
+@import "./reset.css";
+
+/*-------------COLOR PALLET------------------*/
+:root {
+    --app-primary-bg: #1c1c1e;
+    --app-secondary-less-gray: #2c2c2e;
+    --app-orange: #fe8a00;
+    --app-orange-hover:#cb6e00;
+    --app-orange-border: #fe8a00;
+    --app-ligh-orange-border:#ffc988;
+    --app-more-ligh-orange:#fff6ea;
+    --app-white: #f7f7f7;
+    --app-less-white: #eaeaea;
+    --app-grey: #b9b9b9;
+}
+
+/*---------------------------------------------------*/ 
+/*          Container Classes                        */
+/*---------------------------------------------------*/ 
+.container {
+    width: min(100% - 30px, 1080px);
+    margin-inline: auto;
+}
+
+.flex {
+    display: flex; /* Converts the container into a flex container */
+    align-items: center; /* Centers the items vertically */
+    justify-content: center; /* Centers the items horizontally */
+    text-align: center; /* Aligns text to the center (only applies to direct text elements) */
+}
+/*---------------------------------------------------*/ 
+/*                    Header                         */
+/*---------------------------------------------------*/ 
+header {
+    display: flex;
+    justify-content: space-between;
+    height: 80px; /*height of the header and vertically centering text */
+    overflow:hidden;
+    background-color: var(--app-primary-bg);
+    border-bottom: .5px solid var(--app-ligh-orange-border);
+}
+
+header .div-company-name {
+    width: 20%;
+}
+
+header .div-logo {
+    width: 5%;
+}
+
+nav {
+    width: 75%;
+    text-align: right;
+}
+
+.logo-name {
+    color: var(--app-orange);
+    line-height: 80px; /*height of the header and vertically centering text */
+    font-size: 35px;
+}
+
+/*remove the bulet point*/
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline; /*To display element in one line intesad of block (one line for each element)*/
+    line-height: 80px; /*height of the header and vertically centering text */
+}
+
+nav ul li a {
+    color: var(--app-less-white);
+    padding: 0 15px;
+    letter-spacing: 0.3px;
+    font-size: 19px;
+    transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+    color: var(--app-orange);
+}
+
+/*---------------------------------------------------*/ 
+/*                   Main                            */
+/*---------------------------------------------------*/ 
+main{
+    background-color: var(--app-primary-bg);
+}
+
+/*---------------------------------------------------*/ 
+/*                  Find Movies                      */
+/*---------------------------------------------------*/ 
+.div-search{
+    flex-direction: column;
+    width: 100%;
+    height: calc(50dvh - 80px);
+    overflow: hidden;
+}
+
+.div-search h2 {
+    font-size: 30px;
+    font-weight: 400;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: var(--app-less-white);
+}
+ 
+.div-search-components {
+    width: 100%;
+    gap: 30px;
+}
+
+input[type=text] {
+    width: 500px;
+    padding-left: 10px;
+    height: 42px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    background-color: var(--app-secondary-less-gray);
+    border: 1px solid var(--app-secondary-less-gray);
+    color: var(--app-less-white);
+    transition: all 0.3s ease-in-out;
+  }
+
+.movie-typed:hover {
+    border: 1px solid var(--app-orange-border);
+}
+
+input[type=text]::placeholder {
+    color: var(--app-less-white);
+    letter-spacing: 0.2px;
+}
+
+.suggested-movies {
+    width: 500px;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    place-items: center;
+    text-align: center;
+    border-radius: 5px;
+    gap: 10px;
+    background-color: var(--app-secondary-less-gray);
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+}
+
+.suggested-movies .single-suggested-movie{
+    width: 100%;
+    line-height: 42px;
+    height: 42px;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--app-less-white);
+}
+
+.hover-effect p:hover{
+    background-color: var(--app-orange);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.find-btn {
+    width: 120px;
+    height: 42px;
+    border-radius: 5px;
+    font-size: 17px;
+    font-weight: 400;
+    text-align: center;
+    text-transform: capitalize;
+    letter-spacing: 0.2px;
+    color: var(--app-white);
+    background-color: var(--app-orange);
+    border: 1px solid var(--app-orange);
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.find-btn:hover {
+    background-color: var(--app-orange-hover);
+    border: 1px solid var(--app-orange-hover);
+    color: var(--app-more-ligh-orange);
+}
+
+/*---------------------------------------------------*/ 
+/*                 Movie Information                 */
+/*---------------------------------------------------*/ 
+
+@keyframes anim {
+    from {
+        opacity: 0;
+        translate: 0 10px;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0px;
+    }
+}
+
+.grid-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 15px;
+    height: 200px;
+    background-color: var(--app-primary-bg);
+    animation: anim 0.5s ease-in;
+    visibility: hidden;
+}
+
+.grid-element-col-img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;  
+    background-color:var(--app-primary-bg);
+}
+
+.grid-element-col-info {
+    display: flex;
+    align-items: center; /* Centers the items vertically */
+    justify-content: center; /* Centers the items horizontally */
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: left;
+    height: 100%;
+}
+
+.grid-element-col-info > div {
+    align-items: center; /* Centers the items vertically */
+    justify-content: center; /* Centers the items horizontally */
+    text-align: left;
+    margin-left: 30px;
+    justify-content: space-around;
+    margin-bottom: 12px;
+}
+
+
+.grid-element-col-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Maintain aspect ratio and cover the area */
+    border-radius: 10px 10px;
+}
+
+.grid-element-col-info .row-title {
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    color: var(--app-orange);
+    font-size: 19px;
+    font-family: "Montserrat", sans-serif;
+   
+}
+
+.grid-container .row-year-duration {
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    color: var(--app-grey);
+    
+}
+
+.grid-element-col-info .row-description{
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--app-less-white);
+}
+
+.row-genres{
+    display: flex;
+}
+
+ .grid-element-col-info .row-genres {
+    flex-direction: row;
+    justify-content:flex-start;
+    gap:20px;
+    width: 100%;
+    font-size: 17px;
+    height: auto;
+}
+
+.genre{
+    display: flex;
+    flex-direction: row;
+    display: block;
+    width: 100px;
+    line-height: 40px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 0.2px;
+    color: var(--app-less-white);
+    border: 0.5px solid var(--app-ligh-orange-border);
+}
+
+
+
+
+
+

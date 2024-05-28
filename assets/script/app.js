@@ -1,3 +1,7 @@
+/*--------------------------------------------------------------------------------*/
+/* app.js: To create a interative behavior to allow user enter word and show      */
+/* a suggested of list of movies, then selec one and show the poster and info     */
+/*--------------------------------------------------------------------------------*/
 'use strict';
 
 import {
@@ -12,10 +16,12 @@ import {
 import movies from "../data/movies.js";
 
 /*--------------------------------------------------------------------------------*/
-/* Const Global variables                                                  */
+/* Declaring variables                                                            */
 /*--------------------------------------------------------------------------------*/
-//Other Global variables
 let moviesSuggestionsArray = [];
+let previousMovie=null; 
+let actualMovie=null;
+let hasMovie=false;
 
 //Creating HTML elements
 const movieInput = select(".movie-typed");
@@ -25,7 +31,6 @@ const movieInput = select(".movie-typed");
 /*--------------------------------------------------------------------------------*/
 function setValues() {
     movieInput.value = '';
-    let actualMovie = 'no selected';
 }
 
 setValues();
@@ -71,15 +76,15 @@ onEvent('load', window, function (ev) {
 function MoviesSuggestions() {
     let cleanMovieInput = movieInput.value.trim();
     
-    //|| actualMovie !== movieInput.value
     if (cleanMovieInput !== "" ) {
-        let regex = new RegExp(cleanMovieInput, "i"); // Ignora mayúsculas y minúsculas
+        let regex = new RegExp(cleanMovieInput, "i"); // Ignore uppercase and lowercase
     
         moviesSuggestionsArray = movies
-        .filter(element => regex.test(element.title)) // Set filter the matched movies
-        .map(element => element.title) // To get only titles
+        .filter(element => regex.test(element.title)) // Set filter matched movies
+        .map(element => element.title) // To get only title
         .slice(0, 5); 
 
+        //If any movie was selected (array empty)
         if (moviesSuggestionsArray.length === 0) {    
             moviesSuggestionsArray.push("Movie not found");
             MoviesListDiv.classList.remove('hover-effect');
@@ -93,18 +98,14 @@ function MoviesSuggestions() {
         }
         printSuggestedMovies();
     }   
-    else 
-    {
-        console.log("la misma movie");
-    }
-
+   
     return;
 
 }
 
-/*-------------------------------------------------------*/
-/*  Function: Display Suggested movies                     */
-/*-------------------------------------------------------*/
+/*----------------------------------------------------------------*/
+/*  Function: printSuggestedMovies() to display Suggested movies  */
+/*----------------------------------------------------------------*/
 const MoviesListDiv = select(".suggested-movies");
 
 function printSuggestedMovies() {
@@ -127,15 +128,34 @@ function printSuggestedMovies() {
 }
 
 /*----------------------------------------------------------------------------------*/
-/* Function: MoviesListDiv even listener to get the movie suggested selected */
+/* Function: MoviesListDiv even listener to get the movie suggested selected        */
 /*----------------------------------------------------------------------------------*/
 MoviesListDiv.addEventListener('click', function (e) {
     e.preventDefault();
 
     //Clicked movie 
-    GetMovie(e);
+    movieInput.value = GetMovie(e);
+
+    if (hasMovie===null) {
+
+        // Getting the next movie
+        actualMovie = movieInput.value;
+
+        // Assigning the value to evaluated previous movie scenario
+        previousMovie = movieInput.value;
+
+        hasMovie = true;
+    }
+    else{
+        previousMovie = actualMovie;
+        actualMovie = movieInput.value;
+    }
+
 });
 
+/*----------------------------------------------------------------------------------*/
+/* Function: GetMovie                                                               */
+/*----------------------------------------------------------------------------------*/
 function GetMovie(e){
     const clickedElement = e.target;
 
@@ -143,26 +163,33 @@ function GetMovie(e){
     if (miDataValue ===undefined){
         return;
     }
-    movieInput.value = miDataValue;
+ 
+    //hidde the list of movies
     MoviesListDiv.style.visibility = "hidden";
-    //actualMovie = movieInput.value;
+
+    //Getting the next movie
+    return miDataValue;
 }
 
 
-//*----------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------*/
 /* Function: Find Movie-Button even listener to find the info of the movie selected */
 /*----------------------------------------------------------------------------------*/
 const findMovieBtn = select(".find-btn");
 findMovieBtn.addEventListener('click', function (e) {
     e.preventDefault();
-   
-    console.log("Desde find movie btn");
-    PrintInfoMovie();
+
+    //Priting only if the movie is not the same
+    if ( previousMovie !== actualMovie){
+        PrintInfoMovie();
+    }
 });
 
-
  
-
+/*----------------------------------------------------------------------------------*/
+/* Function: PrintInfoMovie()                                                       */
+/*----------------------------------------------------------------------------------*/
 function PrintInfoMovie(){  
 
     //Adding the Grid Container 
@@ -170,17 +197,7 @@ function PrintInfoMovie(){
     gridContainer.innerHTML = ''; //To clean previous content
     gridContainer.style.visibility = "visible";
 
-    if (!gridContainer) {
-        console.error('Grid container not found');
-        return;
-    }
-
-
-    //Adding the Element Container 
-    // const gridElementContainer = create("div");
-    // gridElementContainer.classList.add('grid-element-container');
-
-
+    //getting the info of the selected movie by the user
     const foundMovie = movies.find(movie => movie.title === movieInput.value);
   
     if (!foundMovie){
@@ -188,7 +205,6 @@ function PrintInfoMovie(){
     }
 
     //Adding element container 
-
     const posterMovie = document.createElement("div");
     posterMovie.classList.add('grid-element-col-img');
     gridContainer.appendChild(posterMovie);
@@ -202,7 +218,6 @@ function PrintInfoMovie(){
     imgElement.src = foundMovie.poster;
     imgElement.alt = `${foundMovie.title} Poster`;
     posterMovie.appendChild(imgElement);
-
 
     const titleMovie =   document.createElement("div"); 
     titleMovie.classList.add('row-title');
@@ -224,7 +239,7 @@ function PrintInfoMovie(){
     movieInfo.appendChild(genresMovieDiv);
 
    
-    //Printing the genres'
+    //Printing the genres
     for (const item of foundMovie.genre) {
         const genresMovie =  document.createElement("div"); 
         genresMovie.classList.add('genre');
@@ -232,9 +247,7 @@ function PrintInfoMovie(){
         genresMovieDiv.appendChild(genresMovie); 
     }
 
-    console.log("Géneros:", foundMovie.genre.join(', '));
 }
-
 
 
 

@@ -1,8 +1,5 @@
 'use strict';
 
-
-
-
 // Utility functions
 
 //Create a event listener 

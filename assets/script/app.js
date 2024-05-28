@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------------*/
 /* app.js: To create a interative behavior to allow user enter word and show      */
-/* a suggested of list of movies, then selec one and show the poster and info     */
+/* a suggested a list of movies, then select one and show the poster and info     */
 /*--------------------------------------------------------------------------------*/
 'use strict';
 
@@ -67,7 +67,6 @@ onEvent('load', window, function (ev) {
     movieInput.focus();
 });
 
-
 /*--------------------------------------------------------------------------------*/
 /* Function: MoviesSuggestions()                                                  */
 /* To Find the word(s) input by the user in each title in the array               */
@@ -98,9 +97,7 @@ function MoviesSuggestions() {
         }
         printSuggestedMovies();
     }   
-   
     return;
-
 }
 
 /*----------------------------------------------------------------*/
@@ -136,6 +133,7 @@ MoviesListDiv.addEventListener('click', function (e) {
     //Clicked movie 
     movieInput.value = GetMovie(e);
 
+    //Setting actual movie and previous movie selected
     if (hasMovie===null) {
 
         // Getting the next movie
@@ -172,7 +170,6 @@ function GetMovie(e){
 }
 
 
-
 /*----------------------------------------------------------------------------------*/
 /* Function: Find Movie-Button even listener to find the info of the movie selected */
 /*----------------------------------------------------------------------------------*/
@@ -186,7 +183,6 @@ findMovieBtn.addEventListener('click', function (e) {
     }
 });
 
- 
 /*----------------------------------------------------------------------------------*/
 /* Function: PrintInfoMovie()                                                       */
 /*----------------------------------------------------------------------------------*/
@@ -237,7 +233,6 @@ function PrintInfoMovie(){
     const genresMovieDiv =  document.createElement("div"); 
     genresMovieDiv.classList.add('row-genres');
     movieInfo.appendChild(genresMovieDiv);
-
    
     //Printing the genres
     for (const item of foundMovie.genre) {

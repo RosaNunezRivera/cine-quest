@@ -213,7 +213,7 @@ input[type=text]::placeholder {
 
 .grid-container {
     position: absolute;
-    top: 70%;
+    top: 67%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: grid;

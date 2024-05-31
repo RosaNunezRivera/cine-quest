@@ -195,6 +195,10 @@ input[type=text]::placeholder {
     color: var(--app-more-ligh-orange);
 }
 
+.not-found {
+    pointer-events: none;
+}
+
 /*---------------------------------------------------*/ 
 /*                 Movie Information                 */
 /*---------------------------------------------------*/ 
@@ -213,7 +217,7 @@ input[type=text]::placeholder {
 
 .grid-container {
     position: absolute;
-    top: 67%;
+    top: 65%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: grid;

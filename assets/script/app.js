@@ -51,22 +51,6 @@ movieInput.addEventListener('input', function (e) {
     }
 });
 
-
-/*--------------------------------------------------------------------------------*/
-/* Function: Event listener to avoid reload the page                              */
-/*--------------------------------------------------------------------------------*/
-onEvent('beforeunload', window, function (e) {
-    e.returnValue = undefined;
-    e.preventDefault();
-    movieInput.focus();
-});
-
-onEvent('load', window, function (ev) {
-    ev.returnValue = undefined;
-    ev.preventDefault();
-    movieInput.focus();
-});
-
 /*--------------------------------------------------------------------------------*/
 /* Function: MoviesSuggestions()                                                  */
 /* To Find the word(s) input by the user in each title in the array               */
@@ -87,6 +71,7 @@ function MoviesSuggestions() {
         if (moviesSuggestionsArray.length === 0) {    
             moviesSuggestionsArray.push("Movie not found");
             MoviesListDiv.classList.remove('hover-effect');
+            MoviesListDiv.classList.add("not-found");
             movieInput.classList.add('input-typed');
             MoviesListDiv.dataset.miData = 'NoMatchs';
         }
@@ -241,6 +226,7 @@ function PrintInfoMovie(){
         genresMovie.innerHTML = item;
         genresMovieDiv.appendChild(genresMovie); 
     }
+    setValues();
 
 }
 

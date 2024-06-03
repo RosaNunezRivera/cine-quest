@@ -269,10 +269,9 @@ input[type=text]::placeholder {
     justify-content: space-between;
     width: 100%;
     height: auto;
-    color: var(--app-grey);
+    color: var(--app-less-white);
     font-size: 19px;
     font-family: "Montserrat", sans-serif;
-   
 }
 
 .grid-container .row-year-duration {

@@ -269,7 +269,7 @@ input[type=text]::placeholder {
     justify-content: space-between;
     width: 100%;
     height: auto;
-    color: var(--app-orange);
+    color: var(--app-grey);
     font-size: 19px;
     font-family: "Montserrat", sans-serif;
    
